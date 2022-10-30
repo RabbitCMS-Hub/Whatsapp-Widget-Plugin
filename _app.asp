@@ -154,6 +154,41 @@ Class Whatsapp_Widget_Plugin
 
 
 	'---------------------------------------------------------------
+	' Plugin Defines
+	'---------------------------------------------------------------
+	Public Property Get PluginCredits()
+		PluginCredits = PLUGIN_CREDITS
+	End Property
+
+	Public Property Get PluginCode()
+		PluginCode = PLUGIN_CODE
+	End Property
+
+	Public Property Get PluginName()
+		PluginName = PLUGIN_NAME
+	End Property
+
+	Public Property Get PluginVersion()
+		PluginVersion = PLUGIN_VERSION
+	End Property
+	Public Property Get PluginGit()
+		PluginGit = PLUGIN_GIT
+	End Property
+	Public Property Get PluginDevURL()
+		PluginDevURL = PLUGIN_DEV_URL
+	End Property
+	Private Property Get This()
+		This = Array(PLUGIN_CODE, PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_GIT, PLUGIN_DEV_URL, PLUGIN_FILES_ROOT)
+	End Property
+	Public Property Get PluginFolder()
+		PluginFolder = PLUGIN_FILES_ROOT
+	End Property
+	'---------------------------------------------------------------
+	' Plugin Defines
+	'---------------------------------------------------------------
+
+
+	'---------------------------------------------------------------
 	'
 	'---------------------------------------------------------------
 	Private Property Get WhatsappWidgetData()
