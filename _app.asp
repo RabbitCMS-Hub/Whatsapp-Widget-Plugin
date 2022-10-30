@@ -19,7 +19,7 @@
 '**********************************************
 
 Class Whatsapp_Widget_Plugin
-	Private PLUGIN_CODE, PLUGIN_DB_NAME, PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_CREDITS, PLUGIN_GIT, PLUGIN_DEV_URL, PLUGIN_FILES_ROOT
+	Private PLUGIN_CODE, PLUGIN_DB_NAME, PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_CREDITS, PLUGIN_GIT, PLUGIN_DEV_URL, PLUGIN_FILES_ROOT, PLUGIN_ICON, PLUGIN_REMOVABLE, PLUGIN_ROOT, PLUGIN_FOLDER_NAME
 
 	Private WHATSAPP_EKLENTI_ACTIVE, WHATSAPP_EKLENTI_TELEFON, WHATSAPP_EKLENTI_MESAJ, WHATSAPP_EKLENTI_KARSILAMA, WHATSAPP_EKLENTI_ADI, WHATSAPP_EKLENTI_POZISYON
 	Private WHATSAPP_EKLENTI_BTN_TEXT, WHATSAPP_EKLENTI_TIMING_MSG, WHATSAPP_EKLENTI_TYPEMSG
@@ -44,8 +44,7 @@ Class Whatsapp_Widget_Plugin
 		a=GetSettings(""&PLUGIN_CODE&"_CLASS", "Whatsapp_Widget_Plugin") ' WhatsappWidget
 		a=GetSettings(""&PLUGIN_CODE&"_REGISTERED", ""& Now() &"")
 		a=GetSettings(""&PLUGIN_CODE&"_CODENO", "4748")
-		a=GetSettings(""&PLUGIN_CODE&"_ICON", "zmdi zmdi-whatsapp zmdi-hc-fw")
-		a=GetSettings(""&PLUGIN_CODE&"_FOLDER", "Whatsapp-Widget-Plugin")
+		a=GetSettings(""&PLUGIN_CODE&"_FOLDER", PLUGIN_FOLDER_NAME)
 
 		' Register Settings
 		'------------------------------
@@ -113,7 +112,12 @@ Class Whatsapp_Widget_Plugin
     	PLUGIN_CREDITS 			= "@badursun Anthony Burak DURSUN"
     	PLUGIN_GIT 				= "https://github.com/RabbitCMS-Hub/Whatsapp-Widget-Plugin"
     	PLUGIN_DEV_URL 			= "https://adjans.com.tr"
+    	PLUGIN_ICON 			= "zmdi-whatsapp"
+    	PLUGIN_FOLDER_NAME 		= "Whatsapp-Widget-Plugin"
+    	PLUGIN_REMOVABLE 		= True
     	PLUGIN_FILES_ROOT 		= PLUGIN_VIRTUAL_FOLDER(This)
+    	PLUGIN_ROOT 			= PLUGIN_DIST_FOLDER_PATH(This)
+
     	'-------------------------------------------------------------------------------------
     	' PluginTemplate Main Variables
     	'-------------------------------------------------------------------------------------
@@ -156,32 +160,21 @@ Class Whatsapp_Widget_Plugin
 	'---------------------------------------------------------------
 	' Plugin Defines
 	'---------------------------------------------------------------
-	Public Property Get PluginCredits()
-		PluginCredits = PLUGIN_CREDITS
-	End Property
+	Public Property Get PluginCode() 		: PluginCode = PLUGIN_CODE 					: End Property
+	Public Property Get PluginName() 		: PluginName = PLUGIN_NAME 					: End Property
+	Public Property Get PluginVersion() 	: PluginVersion = PLUGIN_VERSION 			: End Property
+	Public Property Get PluginGit() 		: PluginGit = PLUGIN_GIT 					: End Property
+	Public Property Get PluginDevURL() 		: PluginDevURL = PLUGIN_DEV_URL 			: End Property
+	Public Property Get PluginFolder() 		: PluginFolder = PLUGIN_FILES_ROOT 			: End Property
+	Public Property Get PluginIcon() 		: PluginIcon = PLUGIN_ICON 					: End Property
+	Public Property Get PluginRemovable() 	: PluginRemovable = PLUGIN_REMOVABLE 		: End Property
+	Public Property Get PluginCredits() 	: PluginCredits = PLUGIN_CREDITS 			: End Property
+	Public Property Get PluginRoot() 		: PluginRoot = PLUGIN_ROOT 					: End Property
+	Public Property Get PluginFolderName() 	: PluginFolderName = PLUGIN_FOLDER_NAME 	: End Property
+	Public Property Get PluginDBTable() 	: PluginDBTable = IIf(Len(PLUGIN_DB_NAME)>2, "tbl_plugin_"&PLUGIN_DB_NAME, "") 	: End Property
 
-	Public Property Get PluginCode()
-		PluginCode = PLUGIN_CODE
-	End Property
-
-	Public Property Get PluginName()
-		PluginName = PLUGIN_NAME
-	End Property
-
-	Public Property Get PluginVersion()
-		PluginVersion = PLUGIN_VERSION
-	End Property
-	Public Property Get PluginGit()
-		PluginGit = PLUGIN_GIT
-	End Property
-	Public Property Get PluginDevURL()
-		PluginDevURL = PLUGIN_DEV_URL
-	End Property
 	Private Property Get This()
-		This = Array(PLUGIN_CODE, PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_GIT, PLUGIN_DEV_URL, PLUGIN_FILES_ROOT)
-	End Property
-	Public Property Get PluginFolder()
-		PluginFolder = PLUGIN_FILES_ROOT
+		This = Array(PluginCode, PluginName, PluginVersion, PluginGit, PluginDevURL, PluginFolder, PluginIcon, PluginRemovable, PluginCredits, PluginRoot, PluginFolderName, PluginDBTable )
 	End Property
 	'---------------------------------------------------------------
 	' Plugin Defines
@@ -197,6 +190,10 @@ Class Whatsapp_Widget_Plugin
 
 		If WHATSAPP_EKLENTI_ACTIVE = 1 Then
 			wpCode = "<whatsapp-widget id=""mwb_whatsapp"" number="""& Trim(WHATSAPP_EKLENTI_TELEFON) &""" name="""& WHATSAPP_EKLENTI_ADI &""" pre-msg="""& WHATSAPP_EKLENTI_MESAJ &""" type-msg="""& WHATSAPP_EKLENTI_TYPEMSG &""" timing-text="""& WHATSAPP_EKLENTI_TIMING_MSG &""" welcome-message="""& WHATSAPP_EKLENTI_KARSILAMA &""" avatar=""/favicon.ico"" position="""& WHATSAPP_EKLENTI_POZISYON &""" button-title="""& WHATSAPP_EKLENTI_BTN_TEXT &"""></whatsapp-widget>"
+
+			' Add DİST File to CMS
+			'------------------------------------------------
+			PLUGIN_ADD_TO This, "JS", "js/whatsapp.js"
 		End If
 
 		WhatsappWidgetData = wpCode
