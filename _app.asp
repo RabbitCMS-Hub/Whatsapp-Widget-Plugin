@@ -1,15 +1,13 @@
-<%
+<%'/*
 '**********************************************
-'**********************************************
-'               _ _                 
-'      /\      | (_)                
-'     /  \   __| |_  __ _ _ __  ___ 
+'      /\      | (_)
+'     /  \   __| |_  __ _ _ __  ___
 '    / /\ \ / _` | |/ _` | '_ \/ __|
 '   / ____ \ (_| | | (_| | | | \__ \
 '  /_/    \_\__,_| |\__,_|_| |_|___/
 '               _/ | Digital Agency
-'              |__/ 
-' 
+'              |__/
+'**********************************************
 '* Project  : RabbitCMS
 '* Developer: <Anthony Burak DURSUN>
 '* E-Mail   : badursun@adjans.com.tr
@@ -17,54 +15,75 @@
 '**********************************************
 ' LAST UPDATE: 28.10.2022 15:33 @badursun
 '**********************************************
-
+'*/
 Class Whatsapp_Widget_Plugin
+	'/*
+	'---------------------------------------------------------------
+	' REQUIRED: Plugin Variables
+	'---------------------------------------------------------------
+	'*/
 	Private PLUGIN_CODE, PLUGIN_DB_NAME, PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_CREDITS, PLUGIN_GIT, PLUGIN_DEV_URL, PLUGIN_FILES_ROOT, PLUGIN_ICON, PLUGIN_REMOVABLE, PLUGIN_ROOT, PLUGIN_FOLDER_NAME, PLUGIN_AUTOLOAD
-
+	'/*
+	'---------------------------------------------------------------
+	' REQUIRED: Plugin Variables
+	'---------------------------------------------------------------
+	'*/
 	Private WHATSAPP_EKLENTI_ACTIVE, WHATSAPP_EKLENTI_TELEFON, WHATSAPP_EKLENTI_MESAJ, WHATSAPP_EKLENTI_KARSILAMA, WHATSAPP_EKLENTI_ADI, WHATSAPP_EKLENTI_POZISYON
 	Private WHATSAPP_EKLENTI_BTN_TEXT, WHATSAPP_EKLENTI_TIMING_MSG, WHATSAPP_EKLENTI_TYPEMSG
-
+	'/*
 	'---------------------------------------------------------------
-	' Register Class
+	' REQUIRED: Register Class
 	'---------------------------------------------------------------
+	'*/
 	Public Property Get class_register()
 		DebugTimer ""& PLUGIN_CODE &" class_register() Start"
-		
+		'/*
+		'---------------------------------------------------------------
 		' Check Register
-		'------------------------------
+		'---------------------------------------------------------------
+		'*/
 		If CheckSettings("PLUGIN:"& PLUGIN_CODE &"") = True Then 
 			DebugTimer ""& PLUGIN_CODE &" class_registered"
 			Exit Property
 		End If
-
-		' Register Settings
-		'------------------------------
+		'/*
+		'---------------------------------------------------------------
+		' Plugin Settings
+		'---------------------------------------------------------------
+		'*/
 		a=GetSettings("PLUGIN:"& PLUGIN_CODE &"", PLUGIN_CODE&"_")
 		a=GetSettings(""&PLUGIN_CODE&"_PLUGIN_NAME", PLUGIN_NAME)
-		a=GetSettings(""&PLUGIN_CODE&"_CLASS", "Whatsapp_Widget_Plugin") ' WhatsappWidget
+		a=GetSettings(""&PLUGIN_CODE&"_CLASS", "Whatsapp_Widget_Plugin")
 		a=GetSettings(""&PLUGIN_CODE&"_REGISTERED", ""& Now() &"")
 		a=GetSettings(""&PLUGIN_CODE&"_CODENO", "4748")
 		a=GetSettings(""&PLUGIN_CODE&"_FOLDER", PLUGIN_FOLDER_NAME)
-
+		'/*
+		'---------------------------------------------------------------
 		' Register Settings
-		'------------------------------
+		'---------------------------------------------------------------
+		'*/
 		DebugTimer ""& PLUGIN_CODE &" class_register() End"
 	End Property
+	'/*
 	'---------------------------------------------------------------
-	' Register Class
+	' REQUIRED: Register Class End
 	'---------------------------------------------------------------
+	'*/
 
+	'/*
 	'---------------------------------------------------------------
-	' Plugin Admin Panel Extention
+	' REQUIRED: Plugin Settings Panel
 	'---------------------------------------------------------------
+	'*/
 	Public sub LoadPanel()
+		'/*
 		'--------------------------------------------------------
 		' Main Page
 		'--------------------------------------------------------
+		'*/
 		With Response
-			'------------------------------------------------------------------------------------------
-				PLUGIN_PANEL_MASTER_HEADER This()
-			'------------------------------------------------------------------------------------------
+			PLUGIN_PANEL_MASTER_HEADER This()
+			
 			.Write "<div class=""row"">"
 			.Write "    <div class=""col-lg-6 col-sm-12"">"
 			.Write 			QuickSettings("input", ""& PLUGIN_CODE &"_TELEFON", "Whatsapp Telefonu <small>(9055551234567)</small>", "", TO_DB)
@@ -93,21 +112,25 @@ Class Whatsapp_Widget_Plugin
 			.Write "</div>"
 		End With
 	End Sub
+	'/*
 	'---------------------------------------------------------------
-	'
+	' REQUIRED: Plugin Settings Panel
 	'---------------------------------------------------------------
-
-
+	'*/
+	'/*
 	'---------------------------------------------------------------
-	' Class First Init
+	' REQUIRED: Plugin Class Initialize
 	'---------------------------------------------------------------
+	'*/
 	Private Sub class_initialize()
-    	'-------------------------------------------------------------------------------------
-    	' PluginTemplate Main Variables
-    	'-------------------------------------------------------------------------------------
+		'/*
+    	'-----------------------------------------------------------------------------------
+    	' REQUIRED: PluginTemplate Main Variables
+    	'-----------------------------------------------------------------------------------
+		'*/
     	PLUGIN_NAME 			= "Whatsapp Widget Plugin"
     	PLUGIN_CODE  			= "WHATSAPP_EKLENTI"
-    	PLUGIN_DB_NAME 			= "" ' tbl_plugin_XXXXXXX
+    	PLUGIN_DB_NAME 			= ""
     	PLUGIN_VERSION 			= "1.0.0"
     	PLUGIN_CREDITS 			= "@badursun Anthony Burak DURSUN"
     	PLUGIN_GIT 				= "https://github.com/RabbitCMS-Hub/Whatsapp-Widget-Plugin"
@@ -118,11 +141,11 @@ Class Whatsapp_Widget_Plugin
     	PLUGIN_AUTOLOAD 		= True
     	PLUGIN_ROOT 			= PLUGIN_DIST_FOLDER_PATH(This)
     	PLUGIN_FILES_ROOT 		= PLUGIN_VIRTUAL_FOLDER(This)
-
-    	'-------------------------------------------------------------------------------------
-    	' PluginTemplate Main Variables
-    	'-------------------------------------------------------------------------------------
-
+		'/*
+    	'-----------------------------------------------------------------------------------
+    	' REQUIRED: PluginTemplate Main Variables
+    	'-----------------------------------------------------------------------------------
+		'*/
 		WHATSAPP_EKLENTI_ACTIVE 			= Cint( GetSettings(""& PLUGIN_CODE &"_ACTIVE","0") )
 		WHATSAPP_EKLENTI_TELEFON 			= GetSettings(""& PLUGIN_CODE &"_TELEFON", "")
 		WHATSAPP_EKLENTI_MESAJ 				= GetSettings(""& PLUGIN_CODE &"_MESAJ", "Ürünleriniz hakkında bilgi almak istiyorum")
@@ -132,39 +155,44 @@ Class Whatsapp_Widget_Plugin
 		WHATSAPP_EKLENTI_TIMING_MSG 		= GetSettings(""& PLUGIN_CODE &"_TIMING_MSG", "Genellikle bir saat içinde yanıt verir")
 		WHATSAPP_EKLENTI_BTN_TEXT 			= GetSettings(""& PLUGIN_CODE &"_BTN_TEXT", "Bize Yazın")
 		WHATSAPP_EKLENTI_TYPEMSG 			= GetSettings(""& PLUGIN_CODE &"_TYPEMSG", "Bize Yazın")
-
-    	'-------------------------------------------------------------------------------------
-    	' PluginTemplate Register App
-    	'-------------------------------------------------------------------------------------
+		'/*
+    	'-----------------------------------------------------------------------------------
+    	' REQUIRED: Register Plugin to CMS
+    	'-----------------------------------------------------------------------------------
+		'*/
     	class_register()
-
-    	'-------------------------------------------------------------------------------------
-    	' Hook Auto Load Plugin
-    	'-------------------------------------------------------------------------------------
+		'/*
+    	'-----------------------------------------------------------------------------------
+    	' REQUIRED: Hook Plugin to CMS Auto Load Location WEB|API|PANEL
+    	'-----------------------------------------------------------------------------------
+		'*/
     	If PLUGIN_AUTOLOAD_AT("WEB") = True Then 
     		Cms.FooterData = WhatsappWidgetData()
-    		' WhatsappWidgetData()
     	End If
 	End Sub
+	'/*
 	'---------------------------------------------------------------
-	' Class First Init
+	' REQUIRED: Plugin Class Initialize
 	'---------------------------------------------------------------
-
-
+	'*/
+	'/*
 	'---------------------------------------------------------------
-	' Class Terminate
+	' REQUIRED: Plugin Class Terminate
 	'---------------------------------------------------------------
+	'*/
 	Private sub class_terminate()
 
 	End Sub
+	'/*
 	'---------------------------------------------------------------
-	' Class Terminate
+	' REQUIRED: Plugin Class Terminate
 	'---------------------------------------------------------------
-
-
+	'*/
+	'/*
 	'---------------------------------------------------------------
-	' Plugin Defines
+	' REQUIRED: Plugin Manager Exports
 	'---------------------------------------------------------------
+	'*/
 	Public Property Get PluginCode() 		: PluginCode = PLUGIN_CODE 					: End Property
 	Public Property Get PluginName() 		: PluginName = PLUGIN_NAME 					: End Property
 	Public Property Get PluginVersion() 	: PluginVersion = PLUGIN_VERSION 			: End Property
@@ -178,34 +206,39 @@ Class Whatsapp_Widget_Plugin
 	Public Property Get PluginFolderName() 	: PluginFolderName = PLUGIN_FOLDER_NAME 	: End Property
 	Public Property Get PluginDBTable() 	: PluginDBTable = IIf(Len(PLUGIN_DB_NAME)>2, "tbl_plugin_"&PLUGIN_DB_NAME, "") 	: End Property
 	Public Property Get PluginAutoload() 	: PluginAutoload = PLUGIN_AUTOLOAD 			: End Property
-
 	Private Property Get This()
 		This = Array(PluginCode, PluginName, PluginVersion, PluginGit, PluginDevURL, PluginFolder, PluginIcon, PluginRemovable, PluginCredits, PluginRoot, PluginFolderName, PluginDBTable, PluginAutoload)
 	End Property
+	'/*
 	'---------------------------------------------------------------
-	' Plugin Defines
+	' REQUIRED: Plugin Manager Exports
 	'---------------------------------------------------------------
-
-
+	'*/
+	'/*
 	'---------------------------------------------------------------
-	'
+	' 
 	'---------------------------------------------------------------
+	'*/
 	Private Property Get WhatsappWidgetData()
 		Dim wpCode
 			wpCode = ""
 
 		If WHATSAPP_EKLENTI_ACTIVE = 1 Then
 			wpCode = "<whatsapp-widget id=""mwb_whatsapp"" number="""& Trim(WHATSAPP_EKLENTI_TELEFON) &""" name="""& WHATSAPP_EKLENTI_ADI &""" pre-msg="""& WHATSAPP_EKLENTI_MESAJ &""" type-msg="""& WHATSAPP_EKLENTI_TYPEMSG &""" timing-text="""& WHATSAPP_EKLENTI_TIMING_MSG &""" welcome-message="""& WHATSAPP_EKLENTI_KARSILAMA &""" avatar=""/favicon.ico"" position="""& WHATSAPP_EKLENTI_POZISYON &""" button-title="""& WHATSAPP_EKLENTI_BTN_TEXT &"""></whatsapp-widget>"
-
-			' Add DİST File to CMS
-			'------------------------------------------------
+			'/*
+			'-----------------------------------------------
+			' Add DİST File to CMS 
+			'-----------------------------------------------
+			'*/
 			PLUGIN_ADD_TO This, "JS", "js/whatsapp.js"
 		End If
 
 		WhatsappWidgetData = wpCode
 	End Property
+	'/*
 	'---------------------------------------------------------------
-	'
+	' 
 	'---------------------------------------------------------------
+	'*/
 End Class 
 %>
