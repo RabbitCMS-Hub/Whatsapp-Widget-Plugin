@@ -69,7 +69,6 @@ Class Whatsapp_Widget_Plugin
 	' REQUIRED: Register Class End
 	'---------------------------------------------------------------
 	'*/
-
 	'/*
 	'---------------------------------------------------------------
 	' REQUIRED: Plugin Settings Panel
