@@ -85,29 +85,29 @@ Class Whatsapp_Widget_Plugin
 			PLUGIN_PANEL_MASTER_HEADER This()
 			
 			.Write "<div class=""row"">"
-			.Write "    <div class=""col-lg-6 col-sm-12"">"
+			.Write "    <div class=""col-lg-4 col-sm-12"">"
 			.Write 			QuickSettings("input", ""& PLUGIN_CODE &"_TELEFON", "Whatsapp Telefonu <small>(9055551234567)</small>", "", TO_DB)
 			.Write "    </div>"
-			.Write "    <div class=""col-lg-6 col-sm-12"">"
+			.Write "    <div class=""col-lg-4 col-sm-12"">"
 			.Write 			QuickSettings("input", ""& PLUGIN_CODE &"_ADI", "Temsilci Adı", "", TO_DB)
 			.Write "    </div>"
-			.Write "    <div class=""col-lg-12 col-sm-12"">"
+			.Write "    <div class=""col-lg-4 col-sm-12"">"
 			.Write 			QuickSettings("select", ""& PLUGIN_CODE &"_POZISYON", "Eklenti Pozisyonu", "Left#Sol Köşe|Right#Sağ Köşe", TO_DB)
 			.Write "    </div>"
-			.Write "    <div class=""col-lg-12 col-sm-12"">"
-			.Write 			QuickSettings("textarea", ""& PLUGIN_CODE &"_KARSILAMA", "Karşılama Mesajı", "", TO_DB)
-			.Write "    </div>"
-			.Write "    <div class=""col-lg-12 col-sm-12"">"
-			.Write 			QuickSettings("textarea", ""& PLUGIN_CODE &"_MESAJ", "Gönderilecek otomatik yazı metni", "", TO_DB)
-			.Write "    </div>"
-			.Write "    <div class=""col-lg-12 col-sm-12"">"
+			.Write "    <div class=""col-lg-4 col-sm-12"">"
 			.Write 			QuickSettings("input", ""& PLUGIN_CODE &"_TIMING_MSG", "Temsilci Mesaj Cevaplama Zaman Metni", "", TO_DB)
 			.Write "    </div>"
-			.Write "    <div class=""col-lg-12 col-sm-12"">"
+			.Write "    <div class=""col-lg-4 col-sm-12"">"
 			.Write 			QuickSettings("input", ""& PLUGIN_CODE &"_BTN_TEXT", "Widget Buton Metni", "", TO_DB)
 			.Write "    </div>"
-			.Write "    <div class=""col-lg-12 col-sm-12"">"
+			.Write "    <div class=""col-lg-4 col-sm-12"">"
 			.Write 			QuickSettings("input", ""& PLUGIN_CODE &"_TYPEMSG", "Input Placeholder", "", TO_DB)
+			.Write "    </div>"
+			.Write "    <div class=""col-lg-6 col-sm-12"">"
+			.Write 			QuickSettings("textarea", ""& PLUGIN_CODE &"_KARSILAMA", "Karşılama Mesajı", "", TO_DB)
+			.Write "    </div>"
+			.Write "    <div class=""col-lg-6 col-sm-12"">"
+			.Write 			QuickSettings("textarea", ""& PLUGIN_CODE &"_MESAJ", "Gönderilecek otomatik yazı metni", "", TO_DB)
 			.Write "    </div>"
 			.Write "</div>"
 		End With
@@ -124,27 +124,27 @@ Class Whatsapp_Widget_Plugin
 	'*/
 	Private Sub class_initialize()
 		'/*
-    	'-----------------------------------------------------------------------------------
-    	' REQUIRED: PluginTemplate Main Variables
-    	'-----------------------------------------------------------------------------------
+		'-----------------------------------------------------------------------------------
+		' REQUIRED: PluginTemplate Main Variables
+		'-----------------------------------------------------------------------------------
 		'*/
-    	PLUGIN_NAME 			= "Whatsapp Widget Plugin"
-    	PLUGIN_CODE  			= "WHATSAPP_EKLENTI"
-    	PLUGIN_DB_NAME 			= ""
-    	PLUGIN_VERSION 			= "1.0.0"
-    	PLUGIN_CREDITS 			= "@badursun Anthony Burak DURSUN"
-    	PLUGIN_GIT 				= "https://github.com/RabbitCMS-Hub/Whatsapp-Widget-Plugin"
-    	PLUGIN_DEV_URL 			= "https://adjans.com.tr"
-    	PLUGIN_ICON 			= "zmdi-whatsapp"
-    	PLUGIN_FOLDER_NAME 		= "Whatsapp-Widget-Plugin"
-    	PLUGIN_REMOVABLE 		= True
-    	PLUGIN_AUTOLOAD 		= True
-    	PLUGIN_ROOT 			= PLUGIN_DIST_FOLDER_PATH(This)
-    	PLUGIN_FILES_ROOT 		= PLUGIN_VIRTUAL_FOLDER(This)
+		PLUGIN_NAME 			= "Whatsapp Widget Plugin"
+		PLUGIN_CODE  			= "WHATSAPP_EKLENTI"
+		PLUGIN_DB_NAME 			= ""
+		PLUGIN_VERSION 			= "1.0.0"
+		PLUGIN_CREDITS 			= "@badursun Anthony Burak DURSUN"
+		PLUGIN_GIT 				= "https://github.com/RabbitCMS-Hub/Whatsapp-Widget-Plugin"
+		PLUGIN_DEV_URL 			= "https://adjans.com.tr"
+		PLUGIN_ICON 			= "zmdi-whatsapp"
+		PLUGIN_FOLDER_NAME 		= "Whatsapp-Widget-Plugin"
+		PLUGIN_REMOVABLE 		= True
+		PLUGIN_AUTOLOAD 		= True
+		PLUGIN_ROOT 			= PLUGIN_DIST_FOLDER_PATH(This)
+		PLUGIN_FILES_ROOT 		= PLUGIN_VIRTUAL_FOLDER(This)
 		'/*
-    	'-----------------------------------------------------------------------------------
-    	' REQUIRED: PluginTemplate Main Variables
-    	'-----------------------------------------------------------------------------------
+		'-----------------------------------------------------------------------------------
+		' REQUIRED: PluginTemplate Main Variables
+		'-----------------------------------------------------------------------------------
 		'*/
 		WHATSAPP_EKLENTI_ACTIVE 			= Cint( GetSettings(""& PLUGIN_CODE &"_ACTIVE","0") )
 		WHATSAPP_EKLENTI_TELEFON 			= GetSettings(""& PLUGIN_CODE &"_TELEFON", "")
@@ -156,19 +156,19 @@ Class Whatsapp_Widget_Plugin
 		WHATSAPP_EKLENTI_BTN_TEXT 			= GetSettings(""& PLUGIN_CODE &"_BTN_TEXT", "Bize Yazın")
 		WHATSAPP_EKLENTI_TYPEMSG 			= GetSettings(""& PLUGIN_CODE &"_TYPEMSG", "Bize Yazın")
 		'/*
-    	'-----------------------------------------------------------------------------------
-    	' REQUIRED: Register Plugin to CMS
-    	'-----------------------------------------------------------------------------------
+		'-----------------------------------------------------------------------------------
+		' REQUIRED: Register Plugin to CMS
+		'-----------------------------------------------------------------------------------
 		'*/
-    	class_register()
+		class_register()
 		'/*
-    	'-----------------------------------------------------------------------------------
-    	' REQUIRED: Hook Plugin to CMS Auto Load Location WEB|API|PANEL
-    	'-----------------------------------------------------------------------------------
+		'-----------------------------------------------------------------------------------
+		' REQUIRED: Hook Plugin to CMS Auto Load Location WEB|API|PANEL
+		'-----------------------------------------------------------------------------------
 		'*/
-    	If PLUGIN_AUTOLOAD_AT("WEB") = True Then 
-    		Cms.FooterData = WhatsappWidgetData()
-    	End If
+		If PLUGIN_AUTOLOAD_AT("WEB") = True Then 
+			Cms.FooterData = WhatsappWidgetData()
+		End If
 	End Sub
 	'/*
 	'---------------------------------------------------------------
