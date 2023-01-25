@@ -28,7 +28,7 @@ Class Whatsapp_Widget_Plugin
 	' REQUIRED: Plugin Variables
 	'---------------------------------------------------------------
 	'*/
-	Private WHATSAPP_EKLENTI_ACTIVE, WHATSAPP_EKLENTI_TELEFON, WHATSAPP_EKLENTI_MESAJ, WHATSAPP_EKLENTI_KARSILAMA, WHATSAPP_EKLENTI_ADI, WHATSAPP_EKLENTI_POZISYON
+	Private WHATSAPP_EKLENTI_ACTIVE, WHATSAPP_EKLENTI_TELEFON, WHATSAPP_EKLENTI_MESAJ, WHATSAPP_EKLENTI_KARSILAMA, WHATSAPP_EKLENTI_ADI, WHATSAPP_EKLENTI_POZISYON, WHATSAPP_EKLENTI_THEME
 	Private WHATSAPP_EKLENTI_BTN_TEXT, WHATSAPP_EKLENTI_TIMING_MSG, WHATSAPP_EKLENTI_TYPEMSG
 	'/*
 	'---------------------------------------------------------------
@@ -108,6 +108,9 @@ Class Whatsapp_Widget_Plugin
 			.Write "    <div class=""col-lg-6 col-sm-12"">"
 			.Write 			QuickSettings("textarea", ""& PLUGIN_CODE &"_MESAJ", "Gönderilecek otomatik yazı metni", "", TO_DB)
 			.Write "    </div>"
+			.Write "    <div class=""col-lg-6 col-sm-12"">"
+			.Write 			QuickSettings("select", ""& PLUGIN_CODE &"_THEME", "Tema Rengi", "light#Light|dark#Dark", TO_DB)
+			.Write "    </div>"
 			.Write "</div>"
 		End With
 	End Sub
@@ -154,6 +157,7 @@ Class Whatsapp_Widget_Plugin
 		WHATSAPP_EKLENTI_TIMING_MSG 		= GetSettings(""& PLUGIN_CODE &"_TIMING_MSG", "Genellikle bir saat içinde yanıt verir")
 		WHATSAPP_EKLENTI_BTN_TEXT 			= GetSettings(""& PLUGIN_CODE &"_BTN_TEXT", "Bize Yazın")
 		WHATSAPP_EKLENTI_TYPEMSG 			= GetSettings(""& PLUGIN_CODE &"_TYPEMSG", "Bize Yazın")
+		WHATSAPP_EKLENTI_THEME 				= GetSettings(""& PLUGIN_CODE &"_THEME", "light")
 		'/*
 		'-----------------------------------------------------------------------------------
 		' REQUIRED: Register Plugin to CMS
@@ -165,7 +169,9 @@ Class Whatsapp_Widget_Plugin
 		' REQUIRED: Hook Plugin to CMS Auto Load Location WEB|API|PANEL
 		'-----------------------------------------------------------------------------------
 		'*/
-		If PLUGIN_AUTOLOAD_AT("WEB") = True Then 
+		Dim DONT_RUN_AT
+			DONT_RUN_AT = Array("account-management", "sys", "modal", "payment")
+		If PLUGIN_AUTOLOAD_AT("WEB") = True AND in_array(URLPart(4), DONT_RUN_AT, True) = False Then 
 			Cms.FooterData = WhatsappWidgetData()
 		End If
 	End Sub
@@ -223,7 +229,7 @@ Class Whatsapp_Widget_Plugin
 			wpCode = ""
 
 		If WHATSAPP_EKLENTI_ACTIVE = 1 Then
-			wpCode = "<whatsapp-widget id=""mwb_whatsapp"" number="""& Trim(WHATSAPP_EKLENTI_TELEFON) &""" name="""& WHATSAPP_EKLENTI_ADI &""" pre-msg="""& WHATSAPP_EKLENTI_MESAJ &""" type-msg="""& WHATSAPP_EKLENTI_TYPEMSG &""" timing-text="""& WHATSAPP_EKLENTI_TIMING_MSG &""" welcome-message="""& WHATSAPP_EKLENTI_KARSILAMA &""" avatar=""/favicon.ico"" position="""& WHATSAPP_EKLENTI_POZISYON &""" button-title="""& WHATSAPP_EKLENTI_BTN_TEXT &"""></whatsapp-widget>"
+			wpCode = "<whatsapp-widget id=""mwb_whatsapp"" number="""& Trim(WHATSAPP_EKLENTI_TELEFON) &""" name="""& WHATSAPP_EKLENTI_ADI &""" pre-msg="""& WHATSAPP_EKLENTI_MESAJ &""" type-msg="""& WHATSAPP_EKLENTI_TYPEMSG &""" timing-text="""& WHATSAPP_EKLENTI_TIMING_MSG &""" welcome-message="""& WHATSAPP_EKLENTI_KARSILAMA &""" avatar=""/favicon.ico"" theme="""& WHATSAPP_EKLENTI_THEME &""" position="""& WHATSAPP_EKLENTI_POZISYON &""" button-title="""& WHATSAPP_EKLENTI_BTN_TEXT &"""></whatsapp-widget>"
 			'/*
 			'-----------------------------------------------
 			' Add DİST File to CMS 
